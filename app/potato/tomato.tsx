@@ -6,3 +6,10 @@
 export default function AboutUs() {
 	return <div>Tomato</div>;
 }
+
+/**
+ * 아래 함수를 적용하기 위해서는 무조건 export를 해야한다.
+ */
+export const links = () => [{ rel: 'stylesheet', href: 'potato.com' }];
+
+export const meta = () => [{ title: 'About Us' }];

@@ -10,6 +10,11 @@ import {
 import type { Route } from './+types/root';
 import './app.css';
 
+/**
+ * 컴포넌트 head 영역에 link로 추가
+ * root.tsx 파일에서만 한정된건 아님. 다른 페이지에서도 추가할 수 있음.
+ * route등록을 했을 때 이러한 힘을 갖게 된다.
+ */
 export const links: Route.LinksFunction = () => [
 	{ rel: 'preconnect', href: 'https://fonts.googleapis.com' },
 	{
@@ -30,10 +35,19 @@ export function Layout({ children }: { children: React.ReactNode }) {
 				<meta charSet='utf-8' />
 				<meta name='viewport' content='width=device-width, initial-scale=1' />
 				<Meta />
+				{/* 아래 두 개가 react router가 나중에 js 코드로 교체할 컴포넌트들 
+        Links: 링크를 렌더링하는 컴포넌트 placeholder 같은 컴포넌트. links function에서 export한 내용을 담아둠.
+          각 페이지에서 추가한 링크들을 모두 렌더링 해준다.
+        Meta: 메타 데이터를 렌더링하는 컴포넌트
+        */}
 				<Links />
 			</head>
 			<body>
 				{children}
+				{/* 아래 두 개가 react router가 나중에 js 코드로 교체할 컴포넌트들 
+        ScrollRestoration: 스크롤 위치를 저장하고 복원하는 컴포넌트
+        Scripts: 스크립트를 렌더링하는 컴포넌트
+        */}
 				<ScrollRestoration />
 				<Scripts />
 			</body>
