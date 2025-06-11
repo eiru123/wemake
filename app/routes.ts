@@ -22,7 +22,4 @@ import { type RouteConfig, index, route } from '@react-router/dev/routes';
  * happy path(정상 작동), sad path(에러)에 따라 렌더링 될 컴포넌트를 정의할 수 있다.
  * 그렇기에 layout component을 사용하는 것이다.
  */
-export default [
-	index('routes/home.tsx'),
-	route('/about', 'potato/tomato.tsx'),
-] satisfies RouteConfig;
+export default [index('routes/home.tsx')] satisfies RouteConfig;

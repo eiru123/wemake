@@ -8,6 +8,18 @@ import {
 } from 'react-router';
 
 import type { Route } from './+types/root';
+/**
+ * vite 에만 있는 특별한 문법
+ * 파일 이름 뒤에 ?url을 붙이면 해당 파일의 파일 경로를 반환한다.
+ * 이렇게 하는 이유는 css를 url형태로 추가하기 때문이다.
+ * tailwindcss는 이제 모든 클래스를 담고 있는게 아니라
+ * 컴파일러의 역할을 하도록 진화했다. 모든 class이름을 전부 살펴보고, tilwind class가 있다면 해당 class에 해당하는 css를 찾아서 추가해준다.
+ */
+import stylesheet from './app.css?url';
+console.log(stylesheet);
+/**
+ * 파일 이름 뒤에 ?url을 붙이면 파일 경로를 반환한다.
+ */
 import './app.css';
 
 /**
@@ -26,6 +38,7 @@ export const links: Route.LinksFunction = () => [
 		rel: 'stylesheet',
 		href: 'https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap',
 	},
+	{ rel: 'stylesheet', href: stylesheet },
 ];
 // children에 App 컴포넌트를 렌더링할 것.
 export function Layout({ children }: { children: React.ReactNode }) {
