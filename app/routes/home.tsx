@@ -1,5 +1,10 @@
+import { Button } from '~/components/ui/button';
 import type { Route } from './+types/home';
 
 export default function Home() {
-	return <div>Home</div>;
+	return (
+		<h1>
+			Home<Button variant='default'>Click Me!!!</Button>
+		</h1>
+	);
 }
