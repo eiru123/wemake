@@ -7,6 +7,10 @@ import {
 	ScrollRestoration,
 } from 'react-router';
 
+/**
+ * 폴더 구조는 feature based structure
+ * 도메인 별로 (기능별로) 프로젝트 폴더를 나눈다.
+ */
 import type { Route } from './+types/root';
 /**
  * vite 에만 있는 특별한 문법
