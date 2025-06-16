@@ -25,6 +25,7 @@ console.log(stylesheet);
  * 파일 이름 뒤에 ?url을 붙이면 파일 경로를 반환한다.
  */
 import './app.css';
+import Navigation from './common/components/navigation';
 
 /**
  * 컴포넌트 head 영역에 link로 추가
@@ -78,7 +79,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
  * url에 따라 react router가 렌더링 해야 하는 컴포넌트로 바뀐다.
  */
 export default function App() {
-	return <Outlet />;
+	return (
+		<>
+			<Navigation />
+			<Outlet />
+		</>
+	);
 }
 
 /**
