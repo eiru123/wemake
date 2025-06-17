@@ -6,7 +6,10 @@ import {
 	NavigationMenuTrigger,
 	NavigationMenuContent,
 	NavigationMenuItem,
+	NavigationMenuLink,
+	navigationMenuTriggerStyle,
 } from './ui/navigation-menu';
+import { cn } from '~/lib/utils';
 
 const menues = [
 	{
@@ -130,14 +133,48 @@ export default function Navigation() {
 					<NavigationMenuList>
 						{menues.map((menu) => (
 							<NavigationMenuItem key={menu.name}>
-								<NavigationMenuTrigger>{menu.name}</NavigationMenuTrigger>
-								<NavigationMenuContent>
-									{menu.items?.map((item) => (
-										<NavigationMenuItem key={item.name}>
-											<Link to={item.to}>{item.name}</Link>
-										</NavigationMenuItem>
-									))}
-								</NavigationMenuContent>
+								{menu.items ? (
+									<>
+										<Link to={menu.to}>
+											<NavigationMenuTrigger>{menu.name}</NavigationMenuTrigger>
+										</Link>
+										<NavigationMenuContent>
+											<ul className='grid w-[600px] font-light gap-3 p-4 grid-cols-2'>
+												{menu.items?.map((item) => (
+													<NavigationMenuItem
+														className={cn(
+															'select-none rounded-md transition-colors focus:bg-accent hover:bg-accent',
+															item.to === '/products/promote' &&
+																'col-span-2 bg-primary/10 hover:bg-primary/20 focus:bg-primary/20',
+															item.to === '/jobs/submit' &&
+																'col-span-2 bg-primary/10 hover:bg-primary/20 focus:bg-primary/20'
+														)}
+														key={item.name}
+													>
+														<NavigationMenuLink asChild>
+															{/* asChild를 붙여주면 nagicationMenuLink의 스타일이 자식 Link에 적용된다. 해당 컴포넌트가 아닌 react router의 link를 사용하기 위해 사용*/}
+															<Link
+																className='p-3 space-y-1 block leading-none no-underline outline-none'
+																to={item.to}
+															>
+																<span className='text-sm font-medium leading-none'>
+																	{item.name}
+																</span>
+																<p className='text-sm text-muted-foreground leading-snug'>
+																	{item.description}
+																</p>
+															</Link>
+														</NavigationMenuLink>
+													</NavigationMenuItem>
+												))}
+											</ul>
+										</NavigationMenuContent>
+									</>
+								) : (
+									<Link className={navigationMenuTriggerStyle()} to={menu.to}>
+										{menu.name}
+									</Link>
+								)}
 							</NavigationMenuItem>
 						))}
 					</NavigationMenuList>
