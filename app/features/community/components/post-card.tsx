@@ -11,6 +11,7 @@ import {
 	AvatarImage,
 } from '~/common/components/ui/avatar';
 import { Button } from '~/common/components/ui/button';
+import { DotIcon } from 'lucide-react';
 
 interface PostCardProps {
 	id: string;
@@ -46,14 +47,15 @@ export default function PostCard({
 						<div className='flex text-sm leading-tight gap-2 text-muted-foreground'>
 							<span>{author} on</span>
 							<span>{category}</span>
-							<span>•</span>
+							<DotIcon className='w-4 h-4' />
 							<span>{postedAt}</span>
 						</div>
 					</div>
 				</CardHeader>
 				<CardFooter className='flex justify-end'>
+					{/* link 안에 link를 넣으면 안된다 */}
 					<Button variant='link' asChild>
-						<Link to={`/community/${id}`}>Reply &rarr;</Link>
+						Reply &rarr;
 					</Button>
 				</CardFooter>
 			</Card>
