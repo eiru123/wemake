@@ -14,19 +14,13 @@ export const meta: MetaFunction = () => {
 	];
 };
 
-export function loader() {
-	console.log('loader');
-	return {
-		hello: 'world',
-	};
-}
-export default function HomePage({ loaderData }: Route.ComponentProps) {
+export default function HomePage() {
 	return (
 		<div className='px-20 space-y-40'>
 			<div className='grid grid-cols-3 gap-4'>
 				<div>
 					<h2 className='text-5xl font-bold leading-tight tracking-tight'>
-						Today's Products {JSON.stringify(loaderData)}
+						Today's Products
 					</h2>
 					<p className='text-xl font-light text-foreground'>
 						The best products made by our community today.
