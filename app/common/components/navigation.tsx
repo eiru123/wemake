@@ -38,7 +38,7 @@ const menues = [
 			{
 				name: 'Leaderboards',
 				description: 'See the top performer in your community',
-				to: '/products/leaderboard',
+				to: '/products/leaderboards',
 			},
 			{
 				name: 'Categories',

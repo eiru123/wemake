@@ -1,4 +1,9 @@
-import { type RouteConfig, index, route } from '@react-router/dev/routes';
+import {
+	type RouteConfig,
+	index,
+	prefix,
+	route,
+} from '@react-router/dev/routes';
 
 /**
  * 사용자 url의 위치에 따라 렌더링할 내용을 정의해서 react router에 알려주는 파일
@@ -22,4 +27,35 @@ import { type RouteConfig, index, route } from '@react-router/dev/routes';
  * happy path(정상 작동), sad path(에러)에 따라 렌더링 될 컴포넌트를 정의할 수 있다.
  * 그렇기에 layout component을 사용하는 것이다.
  */
-export default [index('common/pages/home-page.tsx')] satisfies RouteConfig;
+export default [
+	index('common/pages/home-page.tsx'),
+	...prefix('products', [
+		index('features/products/pages/products-page.tsx'),
+		...prefix('leaderboards', [
+			index('features/products/pages/leaderboard-page.tsx'),
+			route(
+				'/yearly/:year',
+				'features/products/pages/yearly-leaderboard-page.tsx'
+			),
+			route(
+				'/monthly/:year/:month',
+				'features/products/pages/monthly-leaderboard-page.tsx'
+			),
+			route(
+				'/weekly/:year/:week',
+				'features/products/pages/weekly-leaderboard-page.tsx'
+			),
+			route(
+				'/daily/:year/:month/:day',
+				'features/products/pages/daily-leaderboard-page.tsx'
+			),
+		]),
+		...prefix('categories', [
+			index('features/products/pages/categories-page.tsx'),
+			route('/:category', 'features/products/pages/category-page.tsx'),
+		]),
+		route('/search', 'features/products/pages/search-page.tsx'),
+		route('/submit', 'features/products/pages/submit-page.tsx'),
+		route('/promote', 'features/products/pages/promote-page.tsx'),
+	]),
+] satisfies RouteConfig;
