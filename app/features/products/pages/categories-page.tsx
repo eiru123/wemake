@@ -1,23 +1,8 @@
-import { type MetaFunction } from 'react-router';
+import { Hero } from '~/common/components/hero';
 import type { Route } from './+types/categories-page';
+import CategoryCard from '../components/category-card';
 
-export function loader({ request }: Route.LoaderArgs) {
-	return {
-		categories: [
-			{ id: 'productivity', name: 'Productivity', count: 42 },
-			{ id: 'design', name: 'Design', count: 28 },
-			{ id: 'developer-tools', name: 'Developer Tools', count: 35 },
-			{ id: 'marketing', name: 'Marketing', count: 19 },
-			{ id: 'finance', name: 'Finance', count: 23 },
-		],
-	};
-}
-
-export function action({ request }: Route.ActionArgs) {
-	return { success: true };
-}
-
-export const meta: MetaFunction = () => {
+export const meta: Route.MetaFunction = () => {
 	return [
 		{ title: 'Categories | wemake' },
 		{ name: 'description', content: 'Browse products by category' },
@@ -26,16 +11,16 @@ export const meta: MetaFunction = () => {
 
 export default function CategoriesPage() {
 	return (
-		<div className='px-20'>
-			<div className='mb-8'>
-				<h1 className='text-4xl font-bold tracking-tight'>Categories</h1>
-				<p className='text-xl text-muted-foreground'>
-					Browse products by category
-				</p>
-			</div>
-
-			<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-				{/* Category cards will be rendered here */}
+		<div className='space-y-10'>
+			<Hero title='Categories' subtitle='Browse products by category' />
+			<div className='grid grid-cols-4 gap-10'>
+				{Array.from({ length: 10 }).map((_, index) => (
+					<CategoryCard
+						id={`categoryId-${index}`}
+						name={`Category Name ${index}`}
+						description={`Category Description ${index}`}
+					/>
+				))}
 			</div>
 		</div>
 	);

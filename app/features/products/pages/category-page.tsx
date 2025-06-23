@@ -1,48 +1,37 @@
-import { type MetaFunction } from 'react-router';
+import { Hero } from '~/common/components/hero';
 import type { Route } from './+types/category-page';
+import ProductCard from '../components/product-card';
+import ProductPagination from '~/common/components/product-pagination';
 
-export function loader({ request, params }: Route.LoaderArgs) {
-	const category = params.category;
-
-	return {
-		category,
-		products: [],
-		totalProducts: 0,
-	};
-}
-
-export function action({ request }: Route.ActionArgs) {
-	return { success: true };
-}
-
-export const meta: MetaFunction<typeof loader> = ({ data }) => {
-	const categoryName =
-		data?.category?.charAt(0).toUpperCase() + data?.category?.slice(1);
-
+export const meta: Route.MetaFunction = ({ params }: Route.MetaArgs) => {
 	return [
-		{ title: `${categoryName} | wemake` },
+		{ title: `Developer Tools | wemake` },
 		{
 			name: 'description',
-			content: `Discover ${categoryName.toLowerCase()} products from our community`,
+			content: `Browse Developer Tools products`,
 		},
 	];
 };
 
 export default function CategoryPage() {
-	const category = 'productivity';
-	const categoryName = category?.charAt(0).toUpperCase() + category?.slice(1);
-
 	return (
-		<div className='px-20'>
-			<div className='mb-8'>
-				<h1 className='text-4xl font-bold tracking-tight'>{categoryName}</h1>
-				<p className='text-xl text-muted-foreground'>
-					Discover {categoryName.toLowerCase()} products from our community
-				</p>
-			</div>
-
-			<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-				{/* Category products will be rendered here */}
+		<div className='space-y-10'>
+			<Hero
+				title={'Developer Tools'}
+				subtitle={`Tools for developers to build products faster`}
+			/>
+			<div className='space-y-10 w-full max-w-screen-md mx-auto'>
+				{Array.from({ length: 11 }).map((_, index) => (
+					<ProductCard
+						id='prodcutId'
+						name='Product Name'
+						description='Product Description'
+						commentsCount={12}
+						viewsCount={12}
+						votesCount={120}
+					/>
+				))}
+				<ProductPagination totalPages={10} />
 			</div>
 		</div>
 	);
