@@ -29,7 +29,7 @@ export default function ProductCard({
 	className,
 }: ProductCardProps) {
 	return (
-		<Link to={`/products/${id}`}>
+		<Link to={`/products/${id}`} className='block'>
 			<Card
 				className={`w-full flex flex-row items-center justify-between bg-transparent hover:bg-card/50 ${
 					className || ''

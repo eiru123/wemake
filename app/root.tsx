@@ -26,6 +26,7 @@ console.log(stylesheet);
  */
 import './app.css';
 import Navigation from './common/components/navigation';
+import { Settings } from 'luxon';
 
 /**
  * 컴포넌트 head 영역에 link로 추가
@@ -47,6 +48,8 @@ export const links: Route.LinksFunction = () => [
 ];
 // children에 App 컴포넌트를 렌더링할 것.
 export function Layout({ children }: { children: React.ReactNode }) {
+	Settings.defaultLocale = 'ko-KR';
+	Settings.defaultZone = 'Asia/Seoul';
 	return (
 		<html lang='en' className='dark'>
 			<head>

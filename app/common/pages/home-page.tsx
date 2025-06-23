@@ -29,7 +29,7 @@ export default function HomePage() {
 						<Link to='/products/leaderboards'>Explore all porducts &rarr;</Link>
 					</Button>
 				</div>
-				{Array.from({ length: 10 }).map((_, index) => (
+				{Array.from({ length: 11 }).map((_, index) => (
 					<ProductCard
 						id='prodcutId'
 						name='Product Name'
