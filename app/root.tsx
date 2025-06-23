@@ -61,7 +61,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 				<Links />
 			</head>
 			<body>
-				{children}
+				<main className='px-20'>{children}</main>
 				{/* 아래 두 개가 react router가 나중에 js 코드로 교체할 컴포넌트들 
         ScrollRestoration: 스크롤 위치를 저장하고 복원하는 컴포넌트
         Scripts: 스크립트를 렌더링하는 컴포넌트
