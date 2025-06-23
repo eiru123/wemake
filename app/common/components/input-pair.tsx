@@ -15,7 +15,7 @@ export default function InputPair({
 }) {
 	return (
 		<div className='space-y-2 flex flex-col'>
-			<Label htmlFor={rest.id} className='flex flex-col items-start'>
+			<Label htmlFor={rest.id} className='flex flex-col items-start gap-1'>
 				{label}
 				<small className='text-muted-foreground'>{description}</small>
 			</Label>
