@@ -1,65 +1,63 @@
-import { type MetaFunction } from 'react-router';
+import { data, isRouteErrorResponse } from 'react-router';
 import type { Route } from './+types/daily-leaderboard-page';
+import { DateTime } from 'luxon';
+import { z } from 'zod';
 
-export function loader({ request, params }: Route.LoaderArgs) {
-	const { year, month, day } = params;
+const paramsSchema = z.object({
+	year: z.coerce.number(),
+	month: z.coerce.number(),
+	day: z.coerce.number(),
+});
+
+export const loader = ({ params }: Route.LoaderArgs) => {
+	const { success, data } = paramsSchema.safeParse(params);
+	const date = DateTime.fromObject({
+		year: Number(year),
+		month: Number(month),
+		day: Number(day),
+	}).setZone('Asia/Seoul');
+
+	if (!date.isValid) {
+		throw data(
+			{
+				error_code: 'INVALID_DATE',
+				message: 'Invalid date',
+			},
+			{ status: 400 }
+		);
+	}
+	const today = DateTime.now().setZone('Asia/Seoul').startOf('day');
+	if (date > today) {
+		throw data(
+			{
+				error_code: 'FUTURE_DATE',
+				message: 'Future date',
+			},
+			{ status: 400 }
+		);
+	}
 
 	return {
-		year,
-		month,
-		day,
-		topProducts: [],
-		totalProducts: 0,
+		date,
 	};
-}
-
-export function action({ request }: Route.ActionArgs) {
-	return { success: true };
-}
-
-export const meta: MetaFunction<typeof loader> = ({ data }) => {
-	const date = new Date(
-		Number(data?.year),
-		Number(data?.month) - 1,
-		Number(data?.day)
-	);
-	const formattedDate = date.toLocaleDateString('en-US', {
-		year: 'numeric',
-		month: 'long',
-		day: 'numeric',
-	});
-
-	return [
-		{ title: `${formattedDate} Leaderboard | wemake` },
-		{ name: 'description', content: `Top products from ${formattedDate}` },
-	];
 };
 
 export default function DailyLeaderboardPage({
 	loaderData,
 }: Route.ComponentProps) {
-	const { year, month, day, topProducts } = loaderData;
-	const date = new Date(Number(year), Number(month) - 1, Number(day));
-	const formattedDate = date.toLocaleDateString('en-US', {
-		year: 'numeric',
-		month: 'long',
-		day: 'numeric',
-	});
+	return <div>Daily Leaderboard</div>;
+}
 
-	return (
-		<div className='px-20'>
-			<div className='mb-8'>
-				<h1 className='text-4xl font-bold tracking-tight'>
-					{formattedDate} Leaderboard
-				</h1>
-				<p className='text-xl text-muted-foreground'>
-					Top products from {formattedDate}
-				</p>
+export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
+	if (isRouteErrorResponse(error)) {
+		return (
+			<div>
+				{error.data.message} / {error.data.error_code}
 			</div>
-
-			<div className='space-y-4'>
-				{/* Daily leaderboard items will be rendered here */}
-			</div>
-		</div>
-	);
+		);
+	}
+	if (error instanceof Error) {
+		return <div>{error.message}</div>;
+	}
+	return <div>Unknown error</div>;
 }
