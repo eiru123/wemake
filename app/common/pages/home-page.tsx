@@ -5,7 +5,6 @@ import IdeaCard from '~/features/ideas/components/idea-card';
 import JobCard from '~/features/jobs/components/job-card';
 import TeamCard from '~/features/teams/components/team-card';
 import { Button } from '../components/ui/button';
-import type { Route } from './+types/home-page';
 
 export const meta: MetaFunction = () => {
 	return [
