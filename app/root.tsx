@@ -5,6 +5,7 @@ import {
 	Outlet,
 	Scripts,
 	ScrollRestoration,
+	useLocation,
 } from 'react-router';
 
 /**
@@ -64,7 +65,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 				<Links />
 			</head>
 			<body>
-				<main className='px-20'>{children}</main>
+				<main>{children}</main>
 				{/* 아래 두 개가 react router가 나중에 js 코드로 교체할 컴포넌트들 
         ScrollRestoration: 스크롤 위치를 저장하고 복원하는 컴포넌트
         Scripts: 스크립트를 렌더링하는 컴포넌트
@@ -82,13 +83,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
  * url에 따라 react router가 렌더링 해야 하는 컴포넌트로 바뀐다.
  */
 export default function App() {
+	const { pathname } = useLocation();
 	return (
-		<div className='py-28'>
-			<Navigation
-				isLoggedIn={true}
-				hasNotifications={true}
-				hasMessages={true}
-			/>
+		<div className={`${pathname.includes('/auth/') ? '' : 'py-28 px-20'}`}>
+			{pathname.includes('/auth') ? null : (
+				<Navigation
+					isLoggedIn={true}
+					hasNotifications={true}
+					hasMessages={true}
+				/>
+			)}
 			<Outlet />
 		</div>
 	);
