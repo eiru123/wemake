@@ -87,7 +87,7 @@ export default function CommunityPage() {
 							</Form>
 						</div>
 						<Button asChild>
-							<Link to='/community/new'>CreateDiscussion</Link>
+							<Link to='/community/submit'>CreateDiscussion</Link>
 						</Button>
 					</div>
 					<div className='space-y-5'>
