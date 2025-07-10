@@ -2,11 +2,6 @@ import { Hero } from '~/common/components/hero';
 import type { Route } from './+types/submit-page';
 import { Form } from 'react-router';
 import InputPair from '~/common/components/input-pair';
-import { Select } from '~/common/components/ui/select';
-import { SelectContent } from '~/common/components/ui/select';
-import { SelectItem } from '~/common/components/ui/select';
-import { SelectTrigger } from '~/common/components/ui/select';
-import { SelectValue } from '~/common/components/ui/select';
 import SelectPair from '~/common/components/select-pair';
 import { Input } from '~/common/components/ui/input';
 import { Label } from '~/common/components/ui/label';
@@ -20,7 +15,7 @@ export const meta: Route.MetaFunction = () => {
 	];
 };
 
-export default function SubmitPage() {
+export default function SubmitProductPage() {
 	const [icon, setIcon] = useState<string | null>(null);
 	const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const file = event.target.files?.[0];
