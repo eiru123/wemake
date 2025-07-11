@@ -3,5 +3,5 @@ export function meta() {
 }
 
 export default function MessagePage() {
-	return <div></div>;
+	return <div>Message</div>;
 }
