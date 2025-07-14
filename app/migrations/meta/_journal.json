@@ -15,6 +15,13 @@
       "when": 1752501970262,
       "tag": "0001_fat_nehzno",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1752503716266,
+      "tag": "0002_modern_shocker",
+      "breakpoints": true
     }
   ]
 }
