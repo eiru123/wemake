@@ -13,6 +13,7 @@ export const locations = pgEnum(
 
 export const salaryRanges = pgEnum('salary_range', SALARY_RANGE);
 
+// users 테이블은 이미 supabase에 만들어져 있으므로 건드리면 안된다.
 // snake case로 작성
 export const jobs = pgTable('jobs', {
 	job_id: bigint({ mode: 'number' })

@@ -8,6 +8,13 @@
       "when": 1752221206671,
       "tag": "0000_colorful_the_anarchist",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1752501970262,
+      "tag": "0001_fat_nehzno",
+      "breakpoints": true
     }
   ]
 }
