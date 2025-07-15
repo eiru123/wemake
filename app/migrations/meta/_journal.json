@@ -29,6 +29,13 @@
       "when": 1752505129497,
       "tag": "0003_outgoing_magik",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1752578057127,
+      "tag": "0004_illegal_white_tiger",
+      "breakpoints": true
     }
   ]
 }
