@@ -36,6 +36,20 @@
       "when": 1752578057127,
       "tag": "0004_illegal_white_tiger",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1752583517958,
+      "tag": "0005_living_daredevil",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1752583633883,
+      "tag": "0006_smiling_beast",
+      "breakpoints": true
     }
   ]
 }
