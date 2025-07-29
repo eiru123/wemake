@@ -11,12 +11,21 @@ import { DropdownMenu } from '~/common/components/ui/dropdown-menu';
 import { PERIOD_OPTIONS, SORT_OPTIONS } from '../constants';
 import { Input } from '~/common/components/ui/input';
 import PostCard from '../components/post-card';
+import { getPosts, getTopics } from '../queries';
+import type { Route } from './+types/community-page';
 
 export function meta() {
 	return [{ title: 'Community | Wemake' }];
 }
 
-export default function CommunityPage() {
+// backend에서 실행
+export const loader = async () => {
+	const topics = await getTopics();
+	const posts = await getPosts();
+	return { topics, posts };
+};
+
+export default function CommunityPage({ loaderData }: Route.ComponentProps) {
 	const [searchParams, setSearchParams] = useSearchParams();
 	const sorting = searchParams.get('sorting') || 'newest';
 	const period = searchParams.get('period') || 'all';
@@ -91,15 +100,17 @@ export default function CommunityPage() {
 						</Button>
 					</div>
 					<div className='space-y-5'>
-						{Array.from({ length: 10 }).map((_, index) => (
+						{loaderData.posts.map((post) => (
 							<PostCard
-								id={`postId-${index}`}
-								title='What is the best productivity tool?'
-								author='Nico'
-								authorAvatarUrl='https://github.com/apple.png'
-								category='productivity'
-								postedAt='12 hours ago'
-								avatarFallback='N'
+								key={post.id}
+								id={post.id}
+								title={post.title}
+								author={post.author}
+								authorAvatarUrl={post.authorAvatarUrl}
+								category={post.topic}
+								postedAt={post.createdAt}
+								avatarFallback='A'
+								votesCount={post.upvotes}
 								expanded
 							/>
 						))}
@@ -110,20 +121,14 @@ export default function CommunityPage() {
 						Topics
 					</span>
 					<div className='flex flex-col gap-4 items-start'>
-						{[
-							'AI Tools',
-							'Design Tools',
-							'Dev Tools',
-							'Note Taking Apps',
-							'Productivity Tools',
-						].map((category) => (
+						{loaderData.topics.map((topic) => (
 							<Button variant='link' asChild className='pl-0'>
 								<Link
-									key={category}
-									to={`/community?topic=${category}`}
+									key={topic.slug}
+									to={`/community?topic=${topic.slug}`}
 									className='font-semibold'
 								>
-									{category}
+									{topic.name}
 								</Link>
 							</Button>
 						))}
