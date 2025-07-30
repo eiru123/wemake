@@ -4,7 +4,7 @@
 // import { asc, count, eq } from 'drizzle-orm';
 
 import client from '~/supa-client';
-
+// drizzle을 사용하면 supabase 기능들(인증, 로그인세션)을 사용할 수 없다.
 // export const getTopics = async () => {
 // 	const allTopics = await db
 // 		.select({
@@ -57,17 +57,14 @@ export const getPosts = async () => {
 	/**
 	 * post는 posts_upvotes와 profile 테이블과 연결되어 있음
 	 */
-	const { data, error } = await client.from('posts').select(
-		`post_id, 
-			title, 
-			created_at, 
-			topic:topics!inner(name), 
-			author:profiles!posts_profile_id_profiles_profile_id_fk!inner(name, avatar, username),
-			upvotes:post_upvotes(count)`
-	);
+	const { data, error } = await client
+		.from('community_post_list_view')
+		.select(`*`);
 	console.log(data, error);
 	if (error) {
 		throw new Error(error.message);
 	}
 	return data;
 };
+
+// join aggregate function 등을 쓸 때는 view를 만들어 사용한다.
