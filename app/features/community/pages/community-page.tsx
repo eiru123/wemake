@@ -37,7 +37,11 @@ export const loader = async () => {
 	const [topics, posts] = await Promise.all([getTopics(), getPosts()]);
 	return { topics, posts };
 };
-
+/**
+ * loader 안에 있는 function에서 error를 throw하면 ErrorBoundary에서 처리됨.
+ * 기본적으로 root에 ErrorBoundary가 있음.
+ * 페이지 마다 ErrorBoundary를 만들 수 있음.
+ */
 export const clientLoader = async ({
 	serverLoader,
 }: Route.ClientLoaderArgs) => {
