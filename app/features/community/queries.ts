@@ -68,3 +68,4 @@ export const getPosts = async () => {
 };
 
 // join aggregate function 등을 쓸 때는 view를 만들어 사용한다.
+// type-fest로 type을 오버라이드 할 수 있다.
