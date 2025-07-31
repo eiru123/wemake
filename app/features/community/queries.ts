@@ -44,6 +44,7 @@ import client from '~/supa-client';
 // };
 
 export const getTopics = async () => {
+	await new Promise((resolve) => setTimeout(resolve, 4000));
 	const { data, error } = await client.from('topics').select('name, slug');
 
 	if (error) {
@@ -57,6 +58,7 @@ export const getPosts = async () => {
 	/**
 	 * post는 posts_upvotes와 profile 테이블과 연결되어 있음
 	 */
+	await new Promise((resolve) => setTimeout(resolve, 4000));
 	const { data, error } = await client
 		.from('community_post_list_view')
 		.select(`*`);

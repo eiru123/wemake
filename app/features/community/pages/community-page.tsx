@@ -4,7 +4,7 @@ import {
 	DropdownMenuTrigger,
 } from '~/common/components/ui/dropdown-menu';
 import { ChevronDownIcon } from 'lucide-react';
-import { Link, useSearchParams, Form, Await } from 'react-router';
+import { Link, useSearchParams, Form } from 'react-router';
 import { Hero } from '~/common/components/hero';
 import { Button } from '~/common/components/ui/button';
 import { DropdownMenu } from '~/common/components/ui/dropdown-menu';
@@ -13,7 +13,6 @@ import { Input } from '~/common/components/ui/input';
 import PostCard from '../components/post-card';
 import { getPosts, getTopics } from '../queries';
 import type { Route } from './+types/community-page';
-import { Suspense } from 'react';
 
 export function meta() {
 	return [{ title: 'Community | Wemake' }];
@@ -28,8 +27,7 @@ export const loader = async () => {
 	// const [topics, posts] = await Promise.all([getTopics(), getPosts()]);
 	// await 없이 내보낸다.
 	// frontend 코드에서 Await 컴포넌트에 전달
-	const topics = await getTopics();
-	const posts = getPosts();
+	const [topics, posts] = await Promise.all([getTopics(), getPosts()]);
 	return { topics, posts };
 };
 
@@ -108,28 +106,23 @@ export default function CommunityPage({ loaderData }: Route.ComponentProps) {
 							<Link to='/community/submit'>CreateDiscussion</Link>
 						</Button>
 					</div>
-					<Suspense fallback={<div>Loading...</div>}>
-						<Await resolve={posts}>
-							{(data) => (
-								<div className='space-y-5'>
-									{data.map((post) => (
-										<PostCard
-											key={post.post_id}
-											id={post.post_id}
-											title={post.title}
-											author={post.author}
-											authorAvatarUrl={post.author_avatar}
-											category={post.topic}
-											postedAt={post.created_at}
-											avatarFallback='A'
-											votesCount={post.upvotes}
-											expanded
-										/>
-									))}
-								</div>
-							)}
-						</Await>
-					</Suspense>
+
+					<div className='space-y-5'>
+						{posts.map((post) => (
+							<PostCard
+								key={post.post_id}
+								id={post.post_id}
+								title={post.title}
+								author={post.author}
+								authorAvatarUrl={post.author_avatar}
+								category={post.topic}
+								postedAt={post.created_at}
+								avatarFallback='A'
+								votesCount={post.upvotes}
+								expanded
+							/>
+						))}
+					</div>
 				</div>
 				<aside className='col-span-2 space-y-4'>
 					<span className='block text-sm font-bold text-muted-foreground'>
