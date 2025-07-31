@@ -20,7 +20,30 @@ export function meta() {
 
 // backend에서 실행
 // 로딩이 오래걸리면 사용자는 화면을 보지 못함.
+// export const loader = async () => {
+// 	// await new Promise((resolve) => setTimeout(resolve, 10000));
+// 	// const topics = await getTopics();
+// 	// const posts = await getPosts();
+// 	// const [topics, posts] = await Promise.all([getTopics(), getPosts()]);
+// 	// await 없이 내보낸다.
+// 	// frontend 코드에서 Await 컴포넌트에 전달
+// 	const [topics, posts] = await Promise.all([getTopics(), getPosts()]);
+// 	return { topics, posts };
+// };
+
+// 서버에서 실행되는게 아니고 브라우저에서 실행됨
 export const loader = async () => {
+	//cliendLoader가 받는다.
+	const [topics, posts] = await Promise.all([getTopics(), getPosts()]);
+	return { topics, posts };
+};
+
+export const clientLoader = async ({
+	serverLoader,
+}: Route.ClientLoaderArgs) => {
+	// localStorage 접근 가능
+	const serverData = await serverLoader();
+	console.log(serverData);
 	// await new Promise((resolve) => setTimeout(resolve, 10000));
 	// const topics = await getTopics();
 	// const posts = await getPosts();
@@ -31,6 +54,7 @@ export const loader = async () => {
 	return { topics, posts };
 };
 
+// ui 오류에 신경쓸 필요없음. 에러나 로딩에 신경 쓸 필요 없음.
 export default function CommunityPage({ loaderData }: Route.ComponentProps) {
 	const { topics, posts } = loaderData;
 	const [searchParams, setSearchParams] = useSearchParams();
@@ -146,4 +170,11 @@ export default function CommunityPage({ loaderData }: Route.ComponentProps) {
 			</div>
 		</div>
 	);
+}
+
+// client loader에서 반환한 데이터를 화면에 표시하기 전에 표시할 컴포넌트
+// 로딩 상태 표시해주는 뷰
+// error는 ErrorBoundary에서 처리
+export function HydrateFallback() {
+	return <div>Loading...</div>;
 }
