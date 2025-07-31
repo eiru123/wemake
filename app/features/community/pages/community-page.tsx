@@ -19,7 +19,9 @@ export function meta() {
 }
 
 // backend에서 실행
+// 로딩이 오래걸리면 사용자는 화면을 보지 못함.
 export const loader = async () => {
+	await new Promise((resolve) => setTimeout(resolve, 10000));
 	const topics = await getTopics();
 	const posts = await getPosts();
 	return { topics, posts };

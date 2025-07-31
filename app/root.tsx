@@ -6,6 +6,7 @@ import {
 	Scripts,
 	ScrollRestoration,
 	useLocation,
+	useNavigation,
 } from 'react-router';
 
 /**
@@ -28,6 +29,7 @@ console.log(stylesheet);
 import './app.css';
 import Navigation from './common/components/navigation';
 import { Settings } from 'luxon';
+import { cn } from './lib/utils';
 
 /**
  * 컴포넌트 head 영역에 link로 추가
@@ -84,9 +86,15 @@ export function Layout({ children }: { children: React.ReactNode }) {
  */
 export default function App() {
 	const { pathname } = useLocation();
+	const navigation = useNavigation();
+	// 사용자가 link를 클릭함을 의미
+	const isLoading = navigation.state === 'loading';
 	return (
 		<div
-			className={`${pathname.includes('/auth/') ? '' : 'py-28 px-5 lg:px-20'}`}
+			className={cn({
+				'py-28 px-5 lg:px-20': !pathname.includes('/auth'),
+				'opacity-50 transition-opacity animate-pulse': isLoading,
+			})}
 		>
 			{pathname.includes('/auth') ? null : (
 				<Navigation
