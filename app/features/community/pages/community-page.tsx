@@ -17,7 +17,7 @@ import type { Route } from './+types/community-page';
 export function meta() {
 	return [{ title: 'Community | Wemake' }];
 }
-
+// ~8월 17일까지 9강까지 끝내기
 // backend에서 실행
 // 로딩이 오래걸리면 사용자는 화면을 보지 못함.
 // export const loader = async () => {
